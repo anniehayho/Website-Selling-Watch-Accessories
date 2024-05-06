@@ -1,8 +1,10 @@
 import CollectionForm from '@/components/collections/CollectionForm'
 import React from 'react'
 
-export const CreateCollection = () => {
+const CreateCollection = () => {
   return (
     <CollectionForm />
   )
 }
+
+export default CreateCollection

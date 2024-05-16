@@ -1,13 +1,16 @@
-"use client"
+"use client";
+
+import { Button } from "@/components/ui/button";
 
 import {
   ColumnDef,
   ColumnFiltersState,
+  getFilteredRowModel,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+  getPaginationRowModel,
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -16,42 +19,40 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-
-import { Input } from "../ui/input"
-import { useState } from "react"
+} from "@/components/ui/table";
+import { Input } from "../ui/input";
+import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  searchKey?: string
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  searchKey: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchKey = "title",
+  searchKey,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  )
-  
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
-    }
-  })
+    },
+  });
 
   return (
     <div className="py-5">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Searching..."
+          placeholder="Search..."
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
@@ -59,6 +60,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -70,11 +72,11 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -88,14 +90,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -103,6 +111,25 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
     </div>
-  )
+  );
 }

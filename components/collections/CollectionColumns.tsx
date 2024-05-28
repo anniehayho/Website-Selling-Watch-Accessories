@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Delete from "@/components/custom_ui/Delete";
+import Delete from "../custom_ui/Delete";
 import Link from "next/link";
 
 export const columns: ColumnDef<CollectionType>[] = [
@@ -20,7 +20,7 @@ export const columns: ColumnDef<CollectionType>[] = [
   {
     accessorKey: "products",
     header: "Products",
-    cell: ({ row }) => <p>{row.original.products?.length || 0}</p>,
+    cell: ({ row }) => <p>{row.original.products.length}</p>,
   },
   {
     id: "actions",

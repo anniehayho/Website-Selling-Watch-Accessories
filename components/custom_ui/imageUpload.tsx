@@ -1,6 +1,7 @@
-import { CldUploadWidget } from 'next-cloudinary';
-import { Button } from '../ui/button';
-import { Plus, Trash } from 'lucide-react';
+import { CldUploadWidget } from "next-cloudinary";
+import { Plus, Trash } from "lucide-react";
+
+import { Button } from "../ui/button";
 import Image from "next/image";
 
 interface ImageUploadProps {
@@ -37,6 +38,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           </div>
         ))}
       </div>
+
       <CldUploadWidget uploadPreset="anniehere" onUpload={onUpload}>
         {({ open }) => {
           return (
@@ -48,7 +50,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         }}
       </CldUploadWidget>
     </div>
-  )
+  );
 };
 
-export default ImageUpload
+export default ImageUpload;

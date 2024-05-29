@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 
-import Loader from "@/components/custom_ui/Loader"; 
+import Loader from "@/components/custom_ui/Loader";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/custom_ui/DataTable";
-import { columns } from "@/components/products/ProductColumn";
+import { columns } from "@/components/products/ProductColumns";
 
 const Products = () => {
   const router = useRouter();

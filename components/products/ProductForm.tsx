@@ -270,13 +270,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               )}
             />
             {collections.length > 0 && (
-              console.log("collections", collections),
-    
+              console.log("collections test", collections),
               <FormField
                 control={form.control}
                 name="collections"
                 render={({ field }) => (
-                  console.log('field', field.value),
+                  console.log("field test", field),
                   <FormItem>
                     <FormLabel>Collections</FormLabel>
                     <FormControl>

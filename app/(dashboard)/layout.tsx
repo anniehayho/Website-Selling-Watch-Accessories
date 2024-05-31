@@ -9,7 +9,7 @@ import { ToasterProvider } from "@/lib/ToasterProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bunny Store - Admin Dashboard",
+  title: "Bunny Watch - Admin Dashboard",
   description: "Admin Dashboard to manage Bunny Store's products and orders",
 };
 

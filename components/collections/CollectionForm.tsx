@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
-import ImageUpload from "../custom_ui/ImageUpload";
+import ImageUpload from "../custom_ui/imageUpload";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Delete from "../custom_ui/Delete";
@@ -62,6 +62,9 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         : "/api/collections";
       const res = await fetch(url, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(values),
       });
       if (res.ok) {
@@ -69,10 +72,14 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         toast.success(`Collection ${initialData ? "updated" : "created"}`);
         window.location.href = "/collections";
         router.push("/collections");
+      } else {
+        const errorData = await res.text();
+        throw new Error(errorData);
       }
     } catch (err) {
+      setLoading(false);
       console.log("[collections_POST]", err);
-      toast.error("Something went wrong! Please try again.");
+      toast.error(err instanceof Error ? err.message : "Something went wrong! Please try again.");
     }
   };
 
